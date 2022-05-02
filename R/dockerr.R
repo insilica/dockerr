@@ -8,9 +8,9 @@ terminal2tbl = function(stdout){
   mapcol <- \(col,last=F){
     idx <- gregexpr(pattern = glue::glue("{col}( |$)+"),text = stdout[1])[[1]]
     end <- \(line){ if(last){ nchar(line) }else{ idx[1]+attr(idx,"match.length")-1 } }
-    purrr::map_chr(stdout[-1],~ substr(.,idx[1],end(.))) |> trimws()
+    map_chr(stdout[-1],~ substr(.,idx[1],end(.))) |> trimws()
   }
-  purrr::imap(cols,\(x,i){ mapcol(x,i==length(cols)) }) |> purrr::set_names(cols) |> tidyr::as_tibble()
+  imap(cols,\(x,i){ mapcol(x,i==length(cols)) }) |> set_names(cols) |> as_tibble()
 }
 
 #' list active docker containers
@@ -18,4 +18,15 @@ terminal2tbl = function(stdout){
 #' @export
 containers = function(){
   system("docker container ls",intern = T) |> terminal2tbl()
+}
+
+#' list active docker containers
+#' @importFrom jsonlite fromJSON
+#' @importFrom glue glue
+#' @param container the container you want to inspect
+#' @return a tibble output of the docker container ls command
+#' @export
+inspect = function(container){
+  res <- system(glue("docker inspect {container}"),intern=T,ignore.stderr=T)
+  res |> paste(collapse="\n") |> fromJSON()
 }
