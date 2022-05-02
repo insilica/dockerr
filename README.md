@@ -2,6 +2,7 @@
 thin wrapper on dockerr cli
 
 ```R
+remotes::install_github("insilica/dockerr")
 dockerr::containers()
 ```
 
