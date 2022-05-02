@@ -3,5 +3,6 @@
 export(containers)
 importFrom(glue,glue)
 importFrom(purrr,imap)
+importFrom(purrr,map_chr)
 importFrom(purrr,set_names)
 importFrom(tidyr,as_tibble)

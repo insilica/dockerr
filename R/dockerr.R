@@ -1,6 +1,6 @@
 #' transform terminal output to a tibble
 #' @param stdout output from terminal
-#' @importFrom purrr imap set_names 
+#' @importFrom purrr imap set_names map_chr
 #' @importFrom tidyr as_tibble
 #' @importFrom glue glue
 terminal2tbl = function(stdout){
